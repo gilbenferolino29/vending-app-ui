@@ -1,18 +1,13 @@
-import React from "react";
+import { useVendingMachineStore } from "../store/vendingMachineStore";
 
-// Define props for the Keypad component
-interface KeypadProps {
-  onKeyPress: (key: string) => void; // Function to call when a button is pressed
-  onBuy: () => void; // Function to call when the "Buy" button is pressed
-  onClear: () => void; // Function to call when the "Clear" button is pressed
-}
-
-const Keypad: React.FC<KeypadProps> = ({ onKeyPress, onBuy, onClear }) => {
+const Keypad = () => {
   // Define the layout of the keypad buttons
   const keys = ["1", "2", "3", "A", "B", "C"];
+  const onKeyPress = useVendingMachineStore((state) => state.handleKeypadPress);
+  const onBuy = useVendingMachineStore((state) => state.buyDrink);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-4">
       <div className="grid grid-cols-3 gap-2 p-2 bg-gray-700 rounded-lg shadow-inner">
         {keys.map((key) => (
           <button
@@ -37,7 +32,7 @@ const Keypad: React.FC<KeypadProps> = ({ onKeyPress, onBuy, onClear }) => {
             rounded-md h-16 flex items-center justify-center
             shadow-md transition-colors duration-200
           "
-          onClick={onClear}
+          onClick={() => onKeyPress("Clear")}
         >
           Clear
         </button>
@@ -45,7 +40,7 @@ const Keypad: React.FC<KeypadProps> = ({ onKeyPress, onBuy, onClear }) => {
         <button
           className="
             col-span-2
-            bg-green-600 hover:bg-green-500 active:bg-green-700
+            !bg-green-600 !hover:bg-green-500 active:bg-green-700
             text-white font-bold text-xl
             rounded-md h-16 flex items-center justify-center
             shadow-md transition-colors duration-200

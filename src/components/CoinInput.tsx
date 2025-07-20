@@ -1,17 +1,14 @@
 // src/components/CoinInput.tsx
-import React from "react";
+import { useVendingMachineStore } from "../store/vendingMachineStore";
 
-interface CoinInputProps {
-  onInsertCoin: (amount: number) => void; // Function to call when a coin is inserted
-}
-
-const CoinInput: React.FC<CoinInputProps> = ({ onInsertCoin }) => {
-  const coinDenominations = [5, 10, 20, 50, 100]; // Example Philippine Pesos denominations
+const CoinInput = () => {
+  const coinDenominations = [1, 5, 10, 20];
+  const onInsertCoin = useVendingMachineStore((state) => state.insertCoin);
 
   return (
     <div className="bg-gray-700 p-4 rounded-md w-full text-center text-sm text-gray-400 shadow-inner">
       <div className="font-semibold text-lg text-white mb-3">Insert Coins</div>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         {coinDenominations.map((amount) => (
           <button
             key={amount}
