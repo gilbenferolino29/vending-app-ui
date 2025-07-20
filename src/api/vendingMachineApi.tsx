@@ -52,6 +52,7 @@ export const fetchInventory = async (): Promise<{
 export const buyDrink = async (
   slot: string,
   payment: {
+    totalPayment: number;
     coins: number;
     cash: number;
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import type { Drink } from "../types";
+import { useVendingMachineStore } from "../store/vendingMachineStore";
 
 // Define props for the DrinkSlot component
 interface DrinkSlotProps {
@@ -14,6 +15,8 @@ const DrinkSlot: React.FC<DrinkSlotProps> = ({
   isSelected,
 }) => {
   const isOutOfStock = drink.quantity === 0;
+  const isStockForRefill = drink.quantity <= 3;
+  const stockRefill = useVendingMachineStore((state) => state.refillDrink);
 
   // Conditional styling based on stock status and selection
   const slotClasses = `
@@ -52,6 +55,22 @@ const DrinkSlot: React.FC<DrinkSlotProps> = ({
       >
         {isOutOfStock ? "Out of Stock" : `Stock: ${drink.quantity}`}
       </div>
+      {isStockForRefill && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            stockRefill(drink.slot);
+          }}
+          className="
+            mt-2 px-3 py-1 text-xs
+            bg-blue-600 hover:bg-blue-700 active:bg-blue-800
+            text-white font-semibold rounded
+            transition-colors duration-200
+          "
+        >
+          Refill
+        </button>
+      )}
       {/* Optional: Visual checkmark when selected */}
       {isSelected && (
         <div className="absolute top-1 right-1 text-green-400 text-3xl">✓</div>
