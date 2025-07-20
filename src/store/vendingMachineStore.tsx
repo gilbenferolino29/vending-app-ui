@@ -248,7 +248,7 @@ export const useVendingMachineStore = create<VendingMachineState>(
             currentMessage:
               "Thank you! Please make a new selection or insert coins.",
           });
-        }, 1000);
+        }, 2000);
       } catch (error: any) {
         set({ currentMessage: `Error: ${error.message}` });
 
